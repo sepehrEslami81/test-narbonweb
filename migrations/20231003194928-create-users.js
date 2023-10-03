@@ -26,7 +26,7 @@ module.exports = {
         allowNull: false,
       },
       birth_year: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {
