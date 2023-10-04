@@ -28,7 +28,7 @@ app.use("/api", api_router);
   const mysqlUrl = `mysql://${config.db.username}:${config.db.password}@${config.db.host}:3306/${config.db.database}`;
   await sequelizeMigration(mysqlUrl);
 
-  const port = Number.parseInt(process.env.APP_PORT);
+  const port = Number.parseInt(process.env.PORT);
   server.listen(port, (err) => {
     if (err != null) throw `failed to start server, ${err}`;
 
