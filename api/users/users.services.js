@@ -5,6 +5,7 @@ const {
   get_user_by_id,
   get_users,
 } = require("../../database/users");
+const { send_otp_sms } = require("../../lib/sms");
 
 const create_random_number = (from, to) =>
   Math.floor(Math.random() * (to - from) + from);
@@ -42,7 +43,7 @@ module.exports.login_user = async (req, res) => {
   const code = create_random_number(1000, 9999);
   mcache.put(phone_number, code, expires_in);
 
-  // send sms in background
+  await send_otp_sms(phone_number, code);
 
   res.json({ message: "sms sent", code_showed_just_for_test: code });
 };
