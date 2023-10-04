@@ -3,6 +3,8 @@ const {
   create_new_user,
   login_user,
   check_otp_code,
+  get_all_user,
+  get_user_by_id,
 } = require("./users.services");
 const { body, query } = require("express-validator");
 const { validateBody } = require("../../middlewares/validation");
@@ -27,6 +29,10 @@ router.post(
   validateBody,
   login_user
 );
+
+router.get("/:id", get_user_by_id);
+
+router.get("/", get_all_user);
 
 router.get(
   "/login",

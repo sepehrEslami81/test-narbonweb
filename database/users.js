@@ -10,3 +10,16 @@ module.exports.get_user_by_phone = async (phone_number) => {
     row: true,
   });
 };
+
+module.exports.get_user_by_id = async (id) => {
+  return await users.findOne({
+    where: { id },
+    row: true,
+  });
+};
+
+module.exports.get_users = async () => {
+  return await users.findAll({
+    row: true,
+  });
+};

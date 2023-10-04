@@ -1,5 +1,10 @@
 const mcache = require("memory-cache");
-const { insert_new_user, get_user_by_phone } = require("../../database/users");
+const {
+  insert_new_user,
+  get_user_by_phone,
+  get_user_by_id,
+  get_users,
+} = require("../../database/users");
 
 const create_random_number = (from, to) =>
   Math.floor(Math.random() * (to - from) + from);
@@ -21,7 +26,13 @@ module.exports.create_new_user = (req, res) => {
 module.exports.login_user = async (req, res) => {
   const { phone_number } = req.body;
 
-  const user = await get_user_by_phone(phone_number);
+  let user;
+  try {
+    user = await get_user_by_phone(phone_number);
+  } catch (error) {
+    res.status(500).json(error);
+    return;
+  }
   if (!user) {
     res.status(404).json({ error: "user not found." });
     return;
@@ -46,4 +57,21 @@ module.exports.check_otp_code = (req, res) => {
       token: "<jwt token>",
     });
   else res.status(401).json({ error: "unauthorized user" });
+};
+
+module.exports.get_user_by_id = (req, res) => {
+  const { id } = req.params;
+
+  get_user_by_id(id)
+    .then((r) => {
+      if (r) res.json(r);
+      else res.status(404).json({ error: "user not found." });
+    })
+    .catch((e) => res.status(500).json({ error: e }));
+};
+
+module.exports.get_all_user = (req, res) => {
+  get_users()
+    .then((r) => res.json(r))
+    .catch((e) => res.status(500).json({ error: e }));
 };
