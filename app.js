@@ -2,6 +2,7 @@ const http = require("http");
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const body_parser = require("body-parser");
 
 const api_router = require("./api/router");
 const config = require("./config");
@@ -9,6 +10,9 @@ const sequelizeMigration = require("./lib/sequelizeMigration");
 
 const app = express();
 const server = http.createServer(app);
+
+app.use(body_parser.urlencoded({ extended: false }));
+app.use(body_parser.json());
 
 // for logging requests
 app.use(morgan("dev"));

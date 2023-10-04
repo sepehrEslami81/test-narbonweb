@@ -12,12 +12,10 @@ module.exports = {
       user_name: {
         type: Sequelize.TEXT,
         allowNull: false,
-        unique: true,
       },
       phone_number: {
         type: Sequelize.TEXT,
         allowNull: false,
-        unique: true,
       },
       first_name: {
         type: Sequelize.TEXT,
